@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "author": "Augusto Lopes Lyra",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht1",
+      "top": -76.5,
+      "left": 167.4,
+      "attrs": { "temperature": "25", "humidity": "50" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 150.2,
+      "left": 19.2,
+      "attrs": { "color": "green" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 178.8,
+      "left": 138.2,
+      "attrs": { "color": "red" }
+    }
+  ],
+  "connections": [
+    [ "esp:15", "dht1:S", "green", [ "v0" ] ],
+    [ "dht1:VCC", "esp:3V3", "red", [ "h-48", "v-57.6", "h-144", "v48" ] ],
+    [ "dht1:GND", "esp:GND.1", "black", [ "v201.6", "h-220.8", "v-86.4" ] ],
+    [ "btn1:1.l", "esp:12", "blue", [ "h-48.8", "v-19" ] ],
+    [ "btn1:2.r", "esp:GND.2", "gray", [ "v-9.4", "h28.2", "v-144" ] ],
+    [ "led1:C", "esp:GND.1", "violet", [ "h-220.4", "v-28.8" ] ],
+    [ "led1:A", "esp:2", "orange", [ "h9.6", "v-57.6" ] ],
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ]
+  ],
+  "dependencies": {}
+}
