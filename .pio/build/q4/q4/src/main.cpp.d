@@ -233,7 +233,7 @@
  C:/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/port/include/aes/esp_aes.h \
  C:/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/hal/include/hal/aes_types.h \
  C:/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/mbedtls/mbedtls/include/mbedtls/error.h \
+ .pio/libdeps/q4/ThingSpeak/src/ThingSpeak.h \
  C:/.platformio/packages/framework-arduinoespressif32/libraries/HTTPClient/src/HTTPClient.h \
  C:/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src/WiFiClient.h \
- .pio/libdeps/q4/ThingSpeak/src/ThingSpeak.h \
- .pio/libdeps/q4/DHT\ sensor\ library\ for\ ESPx/DHTesp.h
+ .pio/libdeps/q4/DHT\ sensor\ library/DHT.h
