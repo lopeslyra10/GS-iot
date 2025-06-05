@@ -4,30 +4,32 @@
 #include <HTTPClient.h>
 #include <DHT.h>
 
-// --- Configuração Wi-Fi ---
+
 const char* SSID = "Wokwi-GUEST";
 const char* PASSWORD = "";
 
-// --- API LOCAL (Java Spring Boot) ---
+
 const char* LEITURA_ENDPOINT = "http://192.168.0.105:8080/leituras";
 const char* ALERTA_ENDPOINT = "http://192.168.0.105:8080/alertas";
 
-const char* THINGSPEAK_API_KEY = "ZEX7LVYWNW05LGY6";
-unsigned long channelID = 2972280;
 
-// --- Pinos ---
+WiFiClient client;
+unsigned long channelID = 2972280;
+const char* THINGSPEAK_API_KEY = "ZEX7LVYWNW05LGY6";
+
+
 #define DHTPIN 15
 #define DHTTYPE DHT22
 const int BUTTON_PIN = 12;
 const int LED_PIN = 2;
 
-// --- Sensor DHT ---
+
 DHT dht(DHTPIN, DHTTYPE);
 
-// --- Estado do botão ---
+
 bool lastButtonState = HIGH;
 
-// --- ID do sensor (definido via Serial) ---
+
 int idSensor = 0;
 
 void setup() {
@@ -44,11 +46,13 @@ void setup() {
   digitalWrite(LED_PIN, LOW);
 
   dht.begin();
+  ThingSpeak.begin(client); 
+
   Serial.println("Sensor iniciado. Digite o ID do sensor:");
 }
 
 void loop() {
-  // --- Leitura do ID via Serial ---
+  
   if (Serial.available() > 0) {
     String input = Serial.readStringUntil('\n');
     input.trim();
@@ -58,7 +62,7 @@ void loop() {
     }
   }
 
-  // --- Verifica botão pressionado ---
+  
   bool buttonState = digitalRead(BUTTON_PIN);
   if (lastButtonState == HIGH && buttonState == LOW && idSensor > 0) {
     float temperatura = dht.readTemperature();
@@ -108,23 +112,17 @@ void loop() {
       }
 
       // --- Envia dados ao ThingSpeak ---
-      HTTPClient tsClient;
-      String tsURL = String(THINGSPEAK_URL) +
-                     "?api_key=" + THINGSPEAK_API_KEY +
-                     "&field1=" + String(temperatura, 1) +
-                     "&field2=" + String(umidade, 1) +
-                     "&field3=" + String(nivelRisco);
+      ThingSpeak.setField(1, temperatura);
+      ThingSpeak.setField(2, umidade);
+      ThingSpeak.setField(3, nivelRisco);
 
-      tsClient.begin(tsURL);
-      int tsCode = tsClient.GET();
+      int tsCode = ThingSpeak.writeFields(channelID, THINGSPEAK_API_KEY);
 
-      if (tsCode > 0) {
-        Serial.println("ThingSpeak: Sucesso [" + String(tsCode) + "]");
+      if (tsCode == 200) {
+        Serial.println("ThingSpeak: Dados enviados com sucesso!");
       } else {
-        Serial.println("ThingSpeak: Erro [" + String(tsCode) + "]");
+        Serial.println("ThingSpeak: Erro ao enviar [" + String(tsCode) + "]");
       }
-
-      tsClient.end();
     }
 
     delay(1000);
