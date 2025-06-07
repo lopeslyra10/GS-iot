@@ -92,7 +92,7 @@ void loop() {
       alertaHttp.begin(secureClient, ALERTA_ENDPOINT);
       alertaHttp.addHeader("Content-Type", "application/json");
 
-      String alertaJson = "{\"temperatura\": 38.4" + String(temperatura, 1) + "," +
+      String alertaJson = "{\"temperatura\":" + String(temperatura, 1) + "," +
                           "\"nivelRisco\":\"" + nivelRisco + "\"," +
                           "\"mensagem\":\"" + mensagem + "\"," +
                           "\"dataAlerta\":null," +
