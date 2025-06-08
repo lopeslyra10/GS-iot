@@ -199,7 +199,7 @@ ThingSpeak: Dados enviados com sucesso!
 
 ## 📅 Status do Projeto
 
-🟢 **Sprint 1:** Protótipo com monitoramento de temperatura/umidade, envio de alertas para API e ThingSpeak funcionando.
+🟢 **Global Solution:** Protótipo com monitoramento de temperatura/umidade, envio de alertas para API e ThingSpeak funcionando.
 
 ---
 
